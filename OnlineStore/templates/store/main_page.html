@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% load static %}
+    <h1>Veste: Лучший Магазин для покупки вещей<br/></h1>
+    <p>НМы не просто бренд, мы - сообщество людей, разделяющих страсть к стилю и красоте.
+        <p>Присоединяйтесь к нашему сообществу, чтобы следить за новинками, обмениваться вдохновляющими образами и быть частью нашей страсти к моде.</p>
+         <a href="https://t.me/vestej">Наш telegram</a>
+    <section class="tiles">
+        {% for item in page_obj %}
+            <article class="style{{ green }}">
+        <span class="image">
+        {% if item.image %}
+            <img src="{{ item.image.url }}" alt="" style="width: 400px; height: 450px;"/>
+        {% else %}
+            <img src="{% static "images/pic01.jpg" %}" alt=""/>
+        {% endif %}
+            <</span>
+                <a href="{% url 'store:item_details' item.slug %}">
+                    <div class="tag">
+                        <object>
+                            {% for tag in item.tags.all %}
+                                <a href="{% url 'store:tag_details' tag.slug %}" style="color: white">{{ tag }}</a>
+                                {% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                        </object>
+                        <br/>
+                    </div>
+                    <h2>{{ item.title }}</h2>
+                    <div class="content">
+                        <p>{{ item.description|truncatechars:150 }}</p>
+                    </div>
+                </a>
+            </article>
+
+        {% endfor %}
+    </section>
+{% endblock %} 
